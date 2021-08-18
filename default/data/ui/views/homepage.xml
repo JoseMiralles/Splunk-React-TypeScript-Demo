@@ -1,0 +1,10 @@
+<dashboard script="client/dist/bundle.js">
+    <label>Homepage</label>
+    <row>
+        <panel>
+            <html>
+                <div id="root">There was a problem loading React!</div>
+            </html>
+        </panel>
+    </row>
+</dashboard>
