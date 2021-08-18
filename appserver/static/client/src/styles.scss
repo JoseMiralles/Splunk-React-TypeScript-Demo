@@ -1,0 +1,29 @@
+#beds-form {
+    padding: 15px;
+    width: fit-content;
+    box-shadow: #e0e0e0 2px 2px 11px;
+}
+
+#beds-fields-row {
+    display: flex;
+    flex-direction: row;
+    label {
+        display: flex;
+        flex-direction: column;
+    }
+    input {
+        margin-right: 15px;
+    }
+}
+
+#listings-ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+
+    li {
+        box-shadow: #cecece 2px 2px 10px;
+        padding: 25px;
+        margin: 15px;
+    }
+}
