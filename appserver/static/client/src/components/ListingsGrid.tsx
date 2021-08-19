@@ -15,8 +15,9 @@ const ListingsGrid = ({ listings }: IProps) => {
         e: React.MouseEvent<HTMLUListElement, MouseEvent>
     ) => {
         //@ts-ignore
-        const idx = e.target.getAttribute("index");
-        console.log(idx);
+        let idx = e.target.getAttribute("index");
+        //@ts-ignore
+        idx = idx ? idx : e.target.parentNode.getAttribute("index");
 
         if (idx) {
             dispatch({

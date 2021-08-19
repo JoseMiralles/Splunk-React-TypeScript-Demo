@@ -64,6 +64,13 @@ td, th {
     }
 }
 
+#listings-table {
+    .selected {
+        background-color: #5cc05c;
+        color: white;
+    }
+}
+
 #listings-ul {
     list-style: none;
     display: flex;
