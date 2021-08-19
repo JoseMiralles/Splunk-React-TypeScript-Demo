@@ -1,7 +1,7 @@
 import { AppActions } from "./store";
 
-export type tabTypes = "Grid" | "Table";
-export const tabTypesArray: tabTypes[] = [ "Grid", "Table" ];
+export type tabTypes = "Grid" | "Table" | "Neighbourhoods";
+export const tabTypesArray: tabTypes[] = [ "Grid", "Table", "Neighbourhoods" ];
 
 export interface UIState {
     selectedTab: tabTypes

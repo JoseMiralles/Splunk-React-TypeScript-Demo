@@ -15,15 +15,15 @@ const SearchForm = (
 
     const [maxBeds, setMaxBeds] = useState<number>(6);
     const [minBeds, setMinBeds] = useState<number>(1);
+    const [count, setCount] = useState<number>(100);
 
-    const bedNumberChanged = (field: "min" | "max") => {
+    const valueChanged = (field: "min" | "max" | "count") => {
         return (e: React.ChangeEvent<HTMLInputElement>) => {
             let num = parseInt(e.target.value);
-            if (num > 6) num = 6;
-            if (num < 0) num = 0;
             switch(field){
                 case "max": setMaxBeds(num); break;
                 case "min": setMinBeds(num); break;
+                case "count": setCount(num); break;
             }
         }
     }
@@ -35,7 +35,7 @@ const SearchForm = (
                 type: "SET_LISTINGS_LOADING",
                 loading: true
             });
-            const table = await performSearch(minBeds, maxBeds);
+            const table = await performSearch(minBeds, maxBeds, count);
             dispatch({
                 type: "RECEIVE_ALL_LISTINGS",
                 listings: convertTableToListingsArray(table)
@@ -53,14 +53,20 @@ const SearchForm = (
                 <label> Min Beds
                     <input
                         type="number"
-                        onChange={bedNumberChanged("min")}
+                        onChange={valueChanged("min")}
                         value={minBeds}/>
                 </label>
                 <label> Max Beds
                     <input
                         type="number"
-                        onChange={bedNumberChanged("max")}
+                        onChange={valueChanged("max")}
                         value={maxBeds}/>
+                </label>
+                <label> Count (0 to get all the results)
+                    <input
+                        type="number"
+                        onChange={valueChanged("count")}
+                        value={count}/>
                 </label>
             </span>
             <button

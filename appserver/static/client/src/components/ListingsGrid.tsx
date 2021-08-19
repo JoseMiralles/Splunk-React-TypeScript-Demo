@@ -8,14 +8,11 @@ interface IProps {
 const ListingsGrid = ({ listings }: IProps) => {
 
     return (
-        <div>
-            <h1>Listings:</h1>
-            <ul id="listings-ul">
-                {listings.length
-                    ? mapListings(listings)
-                    : <li>No Listings found :(</li>}
-            </ul>
-        </div>
+        <ul id="listings-ul">
+            {listings.length
+                ? mapListings(listings)
+                : <li>No Listings found :(</li>}
+        </ul>
     );
 }
 

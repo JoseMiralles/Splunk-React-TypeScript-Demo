@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import ListingsGrid from "./components/ListingsGrid";
+import NeighbourhoodsData from "./components/NeighbourhoodData";
 import SearchForm from "./components/SearchForm";
 import Table from "./components/Table";
 import TabsBar from "./components/TabsBar";
@@ -27,6 +28,7 @@ const App: React.FC = () => {
         <div id="main-content-section">
             {(tab === "Grid") && <ListingsGrid listings={listings} />}
             {(tab === "Table") && <Table listings={listings} loading={loading} />}
+            {(tab === "Neighbourhoods") && <NeighbourhoodsData listings={listings}/>}
         </div>
 
     </div>;

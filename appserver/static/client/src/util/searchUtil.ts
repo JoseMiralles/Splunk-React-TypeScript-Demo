@@ -7,7 +7,8 @@ export interface ITable {
  */
 export const performSearch = (
     minBeds: number,
-    maxBeds: number
+    maxBeds: number,
+    count: number
 ): Promise<ITable> => {
     return new Promise((resolve, reject) => {
         const searchId = "listings-search";
@@ -20,36 +21,27 @@ export const performSearch = (
                 id: searchId,
                 earliest_time: "-5h@y",
                 latest_time: "now",
-                preview: true,
+                preview: false,
                 cache: false,
                 search: `index=airbnb Beds>=${minBeds} Beds<=${maxBeds} | table Name Neighbourhood Beds`
             });
-            const obj = searchManager.data("results");
-            searchManager.on("search:done", function(state: any, job: any){
+            
+            searchManager.data("results", {count: count, status_buckets: 10})
+            .on("data", function(state: any, job: any){
+
+                console.log(state);
+                console.log(job);
                 
                 window.splunkjs.mvc.Components
                     .revokeInstance(searchId);
     
-                if (state.content.resultCount === 0) {
-                    // No results found.
-                    resolve({
-                        fields: [],
-                        rows: []
-                    })
-                }
-                else {
-                    job.fetch(function (err: any) {
-                        job.results({}, function (err: any, results: any) {
-                            const fields: string[] = results.fields;
-                            const rows: string[][] = results.rows;
-                            
-                            resolve({
-                                fields,
-                                rows
-                            });
-                        });
-                    });
-                }
+                const fields: string[] = job.fields;
+                const rows: string[][] = job.rows;
+                
+                resolve({
+                    fields,
+                    rows
+                });
     
             });
         });
