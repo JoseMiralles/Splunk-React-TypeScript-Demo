@@ -1,5 +1,14 @@
+$component-padding: 10px;
+
+.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
 #beds-form {
-    padding: 25px;
+    padding: $component-padding;
     width: fit-content;
 }
 
@@ -12,6 +21,26 @@
     }
     input {
         margin-right: 15px;
+    }
+}
+
+#tabs-bar {
+    padding: $component-padding;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+
+    .tab {
+        padding: 5px;
+        padding-right: 25px;
+        padding-left: 25px;
+        border-bottom: 3px solid transparent;
+    }
+
+    .selected {
+        border-bottom: #5cc05c 3px solid;
     }
 }
 

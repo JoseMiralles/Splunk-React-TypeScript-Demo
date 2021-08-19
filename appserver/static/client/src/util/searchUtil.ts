@@ -10,13 +10,14 @@ export const performSearch = (
     maxBeds: number
 ): Promise<ITable> => {
     return new Promise((resolve, reject) => {
+        const searchId = "listings-search";
         // TODO: handle rejection.
         window.requirejs([
             "splunkjs/mvc/searchmanager",
             "splunkjs/mvc/simplexml/ready!"
         ], function(Searchmanager: any){
             const searchManager = new Searchmanager({
-                id: "example-search",
+                id: searchId,
                 earliest_time: "-5h@y",
                 latest_time: "now",
                 preview: true,
@@ -25,6 +26,9 @@ export const performSearch = (
             });
             const obj = searchManager.data("results");
             searchManager.on("search:done", function(state: any, job: any){
+                
+                window.splunkjs.mvc.Components
+                    .revokeInstance(searchId);
     
                 if (state.content.resultCount === 0) {
                     // No results found.
@@ -36,7 +40,6 @@ export const performSearch = (
                 else {
                     job.fetch(function (err: any) {
                         job.results({}, function (err: any, results: any) {
-                            window.results = results;
                             const fields: string[] = results.fields;
                             const rows: string[][] = results.rows;
                             
