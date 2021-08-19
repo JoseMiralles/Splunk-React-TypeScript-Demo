@@ -7,7 +7,7 @@ import Table from "./components/Table";
 import TabsBar from "./components/TabsBar";
 import { rootState } from "./model/store";
 import "./styles.scss"
-import { convertTableToListingsArray, IListing, performSearch } from "./util/searchUtil";
+import { convertTableToListingsArray, performSearch } from "./util/searchUtil";
 
 const App: React.FC = () => {
 

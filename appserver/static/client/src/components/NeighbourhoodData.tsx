@@ -1,5 +1,5 @@
 import React from "react";
-import { IListing } from "../util/searchUtil";
+import { IListing } from "../model/listingsModel";
 
 interface IProps {
     listings: IListing[];

@@ -1,3 +1,5 @@
+import { IListing } from "../model/listingsModel";
+
 export interface ITable {
     fields: string[],
     rows: string[][]
@@ -45,12 +47,6 @@ export const performSearch = (
 
     });
 };
-
-export interface IListing {
-    Name: string;
-    Neighbourhood: string;
-    Beds: number;
-}
 /**
  * Converts an ITable into a IListing[] array.
  * @param table A table containing rows of events.
@@ -60,10 +56,12 @@ export const convertTableToListingsArray = (
     table: ITable
 ): IListing[] => {
     
-    return table.rows.map(r => ({
+    return table.rows.map((r, i) => ({
+        Index: i,
         Name: r[0],
         Neighbourhood: r[1],
-        Beds: parseInt(r[2])
+        Beds: parseInt(r[2]),
+        Selected: false
     }));
 
 };

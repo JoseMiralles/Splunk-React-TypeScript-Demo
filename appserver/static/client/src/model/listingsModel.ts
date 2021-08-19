@@ -1,8 +1,15 @@
-import { IListing } from "../util/searchUtil";
 import { AppActions } from "./store";
 
 
 // State Interface
+
+export interface IListing {
+    Index: number;
+    Name: string;
+    Neighbourhood: string;
+    Beds: number;
+    Selected: boolean;
+}
 
 export interface IListingsState {
     all: IListing[];
@@ -22,9 +29,15 @@ export interface IReceiveAllListings {
     listings: IListing[]
 }
 
+export interface IToggleListingSelection {
+    type: "TOGGLE_LISTING_SELECTION",
+    Index: number
+}
+
 export type ListingsActions =
     IReceiveAllListings |
-    ISetListingsLoading;
+    ISetListingsLoading |
+    IToggleListingSelection;
 
 
 // Reducer
@@ -52,6 +65,15 @@ export const listingsReducer = (
             return {
                 ...state,
                 loading: action.loading
+            }
+        break;
+
+        case "TOGGLE_LISTING_SELECTION":
+            const newArr = [...state.all];
+            newArr[action.Index].Selected = !newArr[action.Index].Selected; 
+            return {
+                ...state,
+                all: newArr
             }
         break;
 
