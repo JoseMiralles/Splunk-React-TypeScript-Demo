@@ -28,9 +28,6 @@ export const performSearch = (
             
             searchManager.data("results", {count: count, status_buckets: 10})
             .on("data", function(state: any, job: any){
-
-                console.log(state);
-                console.log(job);
                 
                 window.splunkjs.mvc.Components
                     .revokeInstance(searchId);
