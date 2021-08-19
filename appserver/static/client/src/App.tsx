@@ -1,58 +1,22 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import SearchForm from "./components/SearchForm";
+import { rootState } from "./model/store";
 import "./styles.scss"
 import { convertTableToListingsArray, IListing, performSearch } from "./util/searchUtil";
 
 const App: React.FC = () => {
 
-    const [maxBeds, setMaxBeds] = useState<number>(6);
-    const [minBeds, setMinBeds] = useState<number>(1);
-    const [listings, setListings] = useState<IListing[]>([]);
-    const [loading, setLoading] = useState<boolean>(false);
-
-    const bedNumberChanged = (field: "min" | "max") => {
-        return (e: React.ChangeEvent<HTMLInputElement>) => {
-            let num = parseInt(e.target.value);
-            if (num > 6) num = 6;
-            if (num < 0) num = 0;
-            switch(field){
-                case "max": setMaxBeds(num); break;
-                case "min": setMinBeds(num); break;
-            }
+    const {loading, listings} = useSelector((s: rootState) => {
+        return {
+            loading: s.listings.loading,
+            listings: s.listings.all
         }
-    }
-
-    const searchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        (async () => {
-            setLoading(true);
-            const table = await performSearch(minBeds, maxBeds);
-            setListings(convertTableToListingsArray(table));
-            setLoading(false);
-        })();
-    };
+    });
 
     return <div>
 
-        <form id="beds-form" onSubmit={searchSubmit}>
-            <span id="beds-fields-row">
-                <label> Min Beds
-                    <input
-                        type="number"
-                        onChange={bedNumberChanged("min")}
-                        value={minBeds}/>
-                </label>
-                <label> Max Beds
-                    <input
-                        type="number"
-                        onChange={bedNumberChanged("max")}
-                        value={maxBeds}/>
-                </label>
-            </span>
-            <button
-                disabled={ loading ? true : false }>
-                {loading ? "Loading ..." : "Search"}
-            </button>
-        </form>
+        <SearchForm loading={loading}/>
 
         <div>
             <h1>Listings:</h1>
