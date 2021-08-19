@@ -22,7 +22,7 @@ export const performSearch = (
                 latest_time: "now",
                 preview: true,
                 cache: false,
-                search: `index=airbnb Beds>${minBeds} Beds<${maxBeds} | table Name Neighbourhood Beds`
+                search: `index=airbnb Beds>=${minBeds} Beds<=${maxBeds} | table Name Neighbourhood Beds`
             });
             const obj = searchManager.data("results");
             searchManager.on("search:done", function(state: any, job: any){

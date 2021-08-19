@@ -18,13 +18,13 @@ const TabsBar = (
     ) => {
         //@ts-ignore
         const selected: tabTypes = e.target.getAttribute("tabName");
-        console.log(e);
-        console.log(selected);
 
-        dispatch({
-            type: "SELECT_TAB",
-            tab: selected
-        });
+        if (selected) {
+            dispatch({
+                type: "SELECT_TAB",
+                tab: selected
+            });
+        }
     }
 
     return (
