@@ -1,7 +1,9 @@
 import { AppActions } from "./store";
 
-export type tabTypes = "Grid" | "Table" | "Neighbourhoods";
-export const tabTypesArray: tabTypes[] = [ "Grid", "Table", "Neighbourhoods" ];
+export type tabTypes = "Grid" | "Table" | "Neighbourhoods" | "Charts";
+export const tabTypesArray: tabTypes[]= [
+    "Table", "Charts", "Grid", "Neighbourhoods"
+];
 
 export interface UIState {
     selectedTab: tabTypes
@@ -19,7 +21,7 @@ export type UIActionTypes = ISelectTab;
 
 // Reducer
 const initialState: UIState = {
-    selectedTab: "Grid"
+    selectedTab: "Table"
 }
 
 export const UIReducer = (

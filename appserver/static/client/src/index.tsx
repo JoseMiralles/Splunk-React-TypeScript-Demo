@@ -14,6 +14,7 @@ declare global {
         requirejs: any;
         searchManager: any;
         results: any;
+        $: any;
     }
 }
 
