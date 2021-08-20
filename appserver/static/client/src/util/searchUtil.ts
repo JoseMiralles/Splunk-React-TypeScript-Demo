@@ -4,6 +4,12 @@ export interface ITable {
     fields: string[],
     rows: string[][]
 }
+
+let SearchManager: any;
+window.requirejs(["splunkjs/mvc/searchmanager"], (sm: any) => {
+    SearchManager = sm;
+});
+
 /**
  * Gets all of the listings which are minBeds < listing > maxBeds
  */
@@ -14,35 +20,29 @@ export const performSearch = (
 ): Promise<ITable> => {
     return new Promise((resolve, reject) => {
         const searchId = "listings-search";
-        // TODO: handle rejection.
-        window.requirejs([
-            "splunkjs/mvc/searchmanager",
-            "splunkjs/mvc/simplexml/ready!"
-        ], function(Searchmanager: any){
-            const searchManager = new Searchmanager({
-                id: searchId,
-                earliest_time: "-5h@y",
-                latest_time: "now",
-                preview: false,
-                cache: false,
-                search: `index=airbnb Beds>=${minBeds} Beds<=${maxBeds} | table Name Neighbourhood Beds`
-            });
+        const searchManager = new SearchManager({
+            id: searchId,
+            earliest_time: "-5h@y",
+            latest_time: "now",
+            preview: false,
+            cache: false,
+            search: `index=airbnb Beds>=${minBeds} Beds<=${maxBeds} | table Name Neighbourhood Beds`
+        });
+        
+        searchManager.data("results", {count: count, status_buckets: 10})
+        .on("data", function(state: any, job: any){
             
-            searchManager.data("results", {count: count, status_buckets: 10})
-            .on("data", function(state: any, job: any){
-                
-                window.splunkjs.mvc.Components
-                    .revokeInstance(searchId);
-    
-                const fields: string[] = job.fields;
-                const rows: string[][] = job.rows;
-                
-                resolve({
-                    fields,
-                    rows
-                });
-    
+            window.splunkjs.mvc.Components
+                .revokeInstance(searchId);
+
+            const fields: string[] = job.fields;
+            const rows: string[][] = job.rows;
+            
+            resolve({
+                fields,
+                rows
             });
+
         });
 
     });
