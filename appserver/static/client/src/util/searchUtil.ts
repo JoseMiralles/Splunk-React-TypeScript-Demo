@@ -49,6 +49,14 @@ export const performSearch = async (
             cache: false,
             search: `index=airbnb Beds>=${minBeds} Beds<=${maxBeds} | table Name Neighbourhood Beds | head ${count}`
         });
+        searchManager.on("error", function(){
+            console.log("ERROR")
+            throw "Error!"
+        });
+        searchManager.on("failed", function(){
+            console.log("FAILED")
+            throw "Failure!"
+        });
         
         searchManager.data("results", {count: count, status_buckets: 10})
         .on("data", function(state: any, job: any){

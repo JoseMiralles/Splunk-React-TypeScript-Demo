@@ -35,15 +35,25 @@ const SearchForm = (
                 type: "SET_LISTINGS_LOADING",
                 loading: true
             });
-            const table = await performSearch(minBeds, maxBeds, count);
-            dispatch({
-                type: "RECEIVE_ALL_LISTINGS",
-                listings: convertTableToListingsArray(table)
-            });
-            dispatch({
-                type: "SET_LISTINGS_LOADING",
-                loading: false
-            });
+            
+            try {
+                const table = await performSearch(minBeds, maxBeds, count);
+                dispatch({
+                    type: "RECEIVE_ALL_LISTINGS",
+                    listings: convertTableToListingsArray(table)
+                });
+                dispatch({
+                    type: "SET_LISTINGS_LOADING",
+                    loading: false
+                });
+            } catch (ex) {
+                console.log("ERROR!!");
+                console.log(ex);
+                dispatch({
+                    type: "SET_LISTINGS_LOADING",
+                    loading: false
+                });
+            }
         })();
     };
     
